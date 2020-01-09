@@ -21,23 +21,25 @@ AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 
 action=$(jq --raw-output .action "$GITHUB_EVENT_PATH")
 number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-assignee=$(jq --raw-output .assignee.login "$GITHUB_EVENT_PATH")
+label=$(jq --raw-output .label "$GITHUB_EVENT_PATH")
 
-update_review_request() {
+
+
+update_pull_request() {
   curl -sSL \
     -H "Content-Type: application/json" \
     -H "${AUTH_HEADER}" \
     -H "${API_HEADER}" \
     -X $1 \
-    -d "{\"reviewers\":[\"${assignee}\"]}" \
+    -d "{\"reviewers\":[\"${PERMANENT_REVIEWER}\"]}" \
     "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${number}/requested_reviewers"
 }
 
-if [[ "$action" == "assigned" ]]; then
+if [[ "$label" == "WIP" ]]; then
   update_review_request 'POST'
-elif [[ "$action" == "unassigned" ]]; then
-  update_review_request 'DELETE'
-else
-  echo "Ignoring action ${action}"
-  exit 0
+# elif [[ "$action" == "unassigned" ]]; then
+#   update_review_request 'DELETE'
+# else
+#   echo "Ignoring action ${action}"
+#   exit 0
 fi
