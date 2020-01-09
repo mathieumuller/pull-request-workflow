@@ -7,9 +7,8 @@ jobs:
   pull-request-workflow:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
       - name: Pull request workflow
-        uses: Dockerfile
+        uses: mathieumuller/pull-request-workflow@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PERMANENT_REVIEWER: "@adpauly"
