@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Pull request workflow
-        uses: mathieumuller/pull-request-workflow
+        uses: Dockerfile
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PERMANENT_REVIEWER: "@adpauly"
