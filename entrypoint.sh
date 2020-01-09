@@ -16,9 +16,6 @@ if [[ -z "$GITHUB_EVENT_PATH" ]]; then
   exit 1
 fi
 
-echo "${PERMANENT_REVIEWER}"
-echo "${$GITHUB_EVENT_PATH}"
-
 API_HEADER="Accept: application/vnd.github.v3+json; application/vnd.github.antiope-preview+json"
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 
