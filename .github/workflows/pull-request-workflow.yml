@@ -11,5 +11,5 @@ jobs:
         uses: mathieumuller/pull-request-workflow@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PERMANENT_REVIEWER: @mathieumuller
+          PERMANENT_REVIEWER: "@mathieumuller"
           AVAILABLE_REVIEWERS: [adpauly, wirabelle, tibahut, neime]
