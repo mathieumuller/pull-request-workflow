@@ -4,11 +4,11 @@ on:
     types: [labeled]
 
 jobs:
-  pull-request-workflow:
+  uppler-pr-workflow:
     runs-on: ubuntu-latest
     steps:
       - name: Pull request workflow
-        uses: mathieumuller/pull-request-workflow@master
+        uses: mathieumuller/uppler-pr-workflow@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PERMANENT_REVIEWER: "@adpauly"
