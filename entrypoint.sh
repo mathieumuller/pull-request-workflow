@@ -16,13 +16,15 @@ if [[ -z "$GITHUB_EVENT_PATH" ]]; then
   exit 1
 fi
 
+echo "${PERMANENT_REVIEWER}"
+echo "${$GITHUB_EVENT_PATH}"
+
 API_HEADER="Accept: application/vnd.github.v3+json; application/vnd.github.antiope-preview+json"
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 
 action=$(jq --raw-output .action "$GITHUB_EVENT_PATH")
 number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
 label=$(jq --raw-output .label "$GITHUB_EVENT_PATH")
-
 
 
 update_pull_request() {
