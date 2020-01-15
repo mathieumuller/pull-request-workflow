@@ -13,4 +13,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PERMANENT_REVIEWER: "adpauly"
           FINAL_REVIEWER: "neime"
-          AVAILABLE_REVIEWERS: "neime,adpauly,mathieu-uppler"
+          AVAILABLE_REVIEWERS: "neime adpauly mathieu-uppler"
