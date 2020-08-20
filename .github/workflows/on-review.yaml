@@ -1,0 +1,16 @@
+name: Review workflow
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  uppler-pr-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull request workflow
+        uses: mathieumuller/uppler-pr-workflow@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PERMANENT_REVIEWER: "adpauly"
+          FINAL_REVIEWER: "neime"
+          AVAILABLE_REVIEWERS: "neime adpauly mathieu-uppler"
