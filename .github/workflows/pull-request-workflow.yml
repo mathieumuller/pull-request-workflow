@@ -18,6 +18,6 @@ jobs:
         with:
           script: |
             console.log(`${process.env.GITHUB_WORKSPACE}`);
-            // const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/approval.js`)
-            // script({github, context})
+            const script = require(`${process.env.GITHUB_WORKSPACE}/.github/workflows/scripts/approval.js`)
+            script({github, context})
     
