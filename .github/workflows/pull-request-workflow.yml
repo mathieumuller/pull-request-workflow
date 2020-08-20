@@ -3,7 +3,6 @@ on:
   pull_request:
     types: [labeled]
   pull_request_review:
-    types: [submitted]
 
 jobs:
   uppler-pr-workflow:
