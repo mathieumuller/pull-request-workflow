@@ -9,9 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull request workflow
-        uses: mathieumuller/uppler-pr-workflow@master
+      - uses: actions/checkout@v2
+      - uses: actions/github-script@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PERMANENT_REVIEWER: "adpauly"
-          FINAL_REVIEWER: "neime"
-          AVAILABLE_REVIEWERS: "neime adpauly mathieu-uppler"
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           PERMANENT_REVIEWER: "adpauly"
+           FINAL_REVIEWER: "neime"
+           AVAILABLE_REVIEWERS: "neime adpauly mathieu-uppler"
+        with:
+          script: |
+            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/approval.js`)
+            script({github, context})
+    
