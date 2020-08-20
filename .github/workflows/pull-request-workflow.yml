@@ -17,6 +17,6 @@ jobs:
            AVAILABLE_REVIEWERS: "neime adpauly mathieu-uppler"
         with:
           script: |
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/approval.js`)
+            const script = require(`${process.env}/scripts/approval.js`)
             script({github, context})
     
