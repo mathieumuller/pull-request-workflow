@@ -29,17 +29,18 @@ try {
  * Requests reviewers on the pull request
  */
 async function requestReviews() {
-	// let { data: currentReviewers } = await octokit.pulls.listRequestedReviewers({
-	//   owner: repository_owner,
-	//   repo: repository_name,
-	//   pull_number: context.number,
-	// }),
-	let requestedReviewers = [];
+	let { data: currentReviewers } = await octokit.pulls.listRequestedReviewers({
+	  owner: repository_owner,
+	  repo: repository_name,
+	  pull_number: context.number,
+	}),
+	    requestedReviewers = []
+	;
 
 	// keep reviewers if they were already assigned
-	// currentReviewers.forEach(function(reviewer) {
-	// 	requestReviewers.push(reviewer.login);
-	// });
+	currentReviewers.forEach(function(reviewer) {
+		requestReviewers.push(reviewer.login);
+	});
 
 	// always add the permanent reviewer
 	if (!requestedReviewers.includes(core.getInput('permanent_reviewer'))) {
@@ -67,12 +68,12 @@ async function requestReviews() {
 
 	console.log(requestedReviewers);
 
-	octokit.pulls.requestReviewers({
-	  owner: repository_owner,
-	  repo: repository_name,
-	  pull_number: context.number,
-	  reviewers: requestedReviewers
-	});
+	// octokit.pulls.requestReviewers({
+	//   owner: repository_owner,
+	//   repo: repository_name,
+	//   pull_number: context.number,
+	//   reviewers: requestedReviewers
+	// });
 }
 
 /**
