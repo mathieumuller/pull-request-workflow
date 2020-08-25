@@ -3,7 +3,7 @@ const core = require('@actions/core'),
 	payload = github.context.payload,
 	action=payload.action,
 	octokit = github.getOctokit(core.getInput('token')),
-	repository = process.env('GITHUB_REPOSITORY'),
+	repository = process.env.GITHUB_REPOSITORY,
 	repository_owner = repository.split('/')[0],
 	repository_name = repository.split('/')[1]
 ;
