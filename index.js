@@ -7,7 +7,10 @@ try {
 
   	// listen to label addition
   	if ('labeled' === action) {
-
+  		// case RFR label added
+  		if (core.getInput('label_review') === payload.label.name) {
+  			assignReviewers();
+  		}
   	}
 
   	// listen to submitted review
@@ -16,7 +19,7 @@ try {
   	}
 
 
-	console.log(github.context.payload);
+	console.log(process.env.GITHUB_TOKEN);
   // // `who-to-greet` input defined in action metadata file
   // const nameToGreet = core.getInput('who-to-greet');
   // console.log(`Hello ${nameToGreet}!`);
@@ -28,6 +31,7 @@ try {
   core.setFailed(error.message);
 }
 
-function assignRevewers(payload) {
+function assignRevewers() {
+
 
 }

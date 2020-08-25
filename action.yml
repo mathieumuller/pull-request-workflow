@@ -1,10 +1,10 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  label_review:
+    description: 'The label that triggers review requests'
     required: true
-    default: 'World'
+    default: 'RFR'
 outputs:
   time: # id of output
     description: 'The time we greeted you'
