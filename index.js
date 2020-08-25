@@ -25,25 +25,14 @@ try {
   core.setFailed(error.message);
 }
 
-
-/**
- * Returns the list of repository collaborators
- */
-async function getCollaborators() {
-	let { data: collaborators } = await octokit.repos.listCollaborators({
-	  owner: repository_owner,
-	  repo: repository_name
-	});
-
-   	return collaborators;
-}
-
 /**
  * Requests reviewers on the pull request
  */
-function requestReviews() {
-	// let collaborators = shuffle(getCollaborators()),
-	let collaborators = getCollaborators(),
+async function requestReviews() {
+	let { data: collaborators } = await octokit.repos.listCollaborators({
+	  owner: repository_owner,
+	  repo: repository_name
+	}),
 		requestedReviewers = [core.getInput('permanent_reviewer')],
 		countReviewers = 1;
 
