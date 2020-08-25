@@ -10,8 +10,8 @@ const core = require('@actions/core'),
 	repository_name = repository.split('/')[1]
 ;
 
-console.log(context);
-console.log(octokit);
+core.setOutput("context", context);
+core.setOutput("octokit", octokit);
 
 // async function getCollaborators() {
 // 	let { data: collaborators } = await octokit.repos.get({
