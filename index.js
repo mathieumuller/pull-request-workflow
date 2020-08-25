@@ -42,7 +42,8 @@ async function getCollaborators() {
  * Requests reviewers on the pull request
  */
 function requestReviews() {
-	let collaborators = shuffle(getCollaborators()),
+	// let collaborators = shuffle(getCollaborators()),
+	let collaborators = getCollaborators(),
 		requestedReviewers = [core.getInput('permanent_reviewer')],
 		countReviewers = 1;
 
