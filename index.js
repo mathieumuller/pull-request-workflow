@@ -36,8 +36,12 @@ async function requestReviews() {
 		requestedReviewers = [core.getInput('permanent_reviewer')],
 		countReviewers = 1;
 
+		console.log(collaborators);
 	collaborators.forEach(function(collaborator) {
 		let login = collaborator.login;
+		console.log(login);
+		console.log(requestedReviewers.length);
+		console.log(core.getInput('reviewers_number'));
 
 		if (requestedReviewers.length < core.getInput('reviewers_number') && !requestedReviewers.includes(login)) {
 			// add reviewer
