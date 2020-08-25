@@ -13,15 +13,15 @@ const core = require('@actions/core'),
 core.debug("context", context);
 core.debug("octokit", octokit);
 
-// async function getCollaborators() {
-// 	let { data: collaborators } = await octokit.repos.get({
-// 	  repository_owner,
-// 	  repository_name
-// 	});
+async function getCollaborators() {
+	let { data: collaborators } = await octokit.repos.listCollaborators({
+	  repository_owner,
+	  repository_name
+	});
 
-//    	console.log(collaborators);
-// }
-//getCollaborators();
+   	console.log(collaborators);
+}
+getCollaborators();
 
 // function editLabel() {
 //     var context = github.context;
