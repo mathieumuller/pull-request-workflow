@@ -7,10 +7,16 @@ inputs:
   label_review:
     description: 'The label that triggers review requests'
     required: true
-  reviewer_number:
+  label_test:
+    description: 'The label that triggers acceptance tests'
+    required: true
+  label_emergency:
+    description: 'The label to unlock the workflow and be able to merge the pull request manually'
+    required: true
+  reviewers_number:
     description: 'The number of reviewers assigned to a pull request'
     required: true
-  approval_number:
+  approvals_number:
     description: 'The number of approvals required to be accepted'
     required: true
   permanent_reviewer:

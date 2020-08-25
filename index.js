@@ -29,24 +29,48 @@ try {
  * Requests reviewers on the pull request
  */
 async function requestReviews() {
-	let { data: collaborators } = await octokit.repos.listCollaborators({
+	let { data: currentReviewers } = await octokit.repos.listRequestedReviewers({
 	  owner: repository_owner,
 	  repo: repository_name
 	}),
-		requestedReviewers = [core.getInput('permanent_reviewer')],
-		countReviewers = 1;
+		requestedReviewers = []
+	;
 
-		console.log(collaborators);
-	shuffle(collaborators).forEach(function(collaborator) {
-		let login = collaborator.login;
-
-		if (requestedReviewers.length < core.getInput('reviewers_number') && !requestedReviewers.includes(login)) {
-			// add reviewer
-			requestedReviewers.push(login);
-		}
+	// keep reviewers if they were already assigned
+	currentReviewers.forEach(function(reviewer) {
+		requestReviewers.push(reviewer.login);
 	});
 
-	console.log(requestedReviewers);
+	// always add the permanent reviewer
+	if (!requestedReviewers.includes(core.getInput('permanent_reviewer'))) {
+		requestedReviewers.push(core.getInput('permanent_reviewer'));
+	}
+
+
+	// complete the list of reviewers until the expected number of reviewers is reached
+	if (requestedReviewers.length < core.getInput('reviewers_number')) {
+		// get the whole list of repository collaborators and shffle assign reviewers
+		let { data: collaborators } = await octokit.repos.listCollaborators({
+		  owner: repository_owner,
+		  repo: repository_name
+		});
+
+		shuffle(collaborators).forEach(function(collaborator) {
+			let login = collaborator.login;
+
+			if (requestedReviewers.length < core.getInput('reviewers_number') && !requestedReviewers.includes(login)) {
+				// add reviewer
+				requestedReviewers.push(login);
+			}
+		});
+	}
+
+	octokit.pulls.requestReviewers({
+	  owner: repository_owner,
+	  repo: repository_name,
+	  pull_number: context.number,
+	  reviewers: requestedReviewers
+	});
 }
 
 /**
