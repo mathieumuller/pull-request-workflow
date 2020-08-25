@@ -5,18 +5,16 @@ const core = require('@actions/core'),
 	octokit = github.getOctokit(core.getInput('token'))
 ;
 
-async function getCollaborators(payload) {
-	console.log(payload.action, payload.repository);
-	let { data: collaborators } = await octokit.request(payload.repository.collaborators_url);
-  	// 	    { data: collaborators } = await octokit.repos.listCollaborators({
-			//   uppler,
-			//   uppler,
-			// });
+async function getCollaborators() {
+	let { data: collaborators } = await octokit.repos.listCollaborators({
+	  'uppler',
+	  'uppler',
+	});
 
-   	console.log('toto', collaborators);
+   	console.log(collaborators);
 }
 
-getCollaborators(payload);
+getCollaborators();
 
 
 
