@@ -39,11 +39,7 @@ async function requestReviews() {
 	collaborators.forEach(function(collaborator) {
 		let login = collaborator.login;
 
-		if (requestedReviewers.length() === core.getInput('reviewers_number')) {
-			break;
-		}
-
-		if (!requestedReviewers.includes(login)) {
+		if (requestedReviewers.length() < core.getInput('reviewers_number') && !requestedReviewers.includes(login)) {
 			// add reviewer
 			requestedReviewers.push(login);
 		}
