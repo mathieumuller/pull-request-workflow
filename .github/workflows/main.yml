@@ -17,7 +17,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           label_review: 'RFR'
-          label_tests: 'RFT'
+          label_test: 'RFT'
           label_emergency: 'MGY'
           permanent_reviewer: mathieumuller
           reviewers_number: 3
