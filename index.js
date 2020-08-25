@@ -1,14 +1,14 @@
 const core = require('@actions/core'),
+	token=core.getInput('token'),
 	github = require('@actions/github'),
+	client = new github.GitHub(token),
 	context = github.context,
 	payload = context.payload,
 	action=payload.action,
-	token=core.getInput('token'),
-	octokit = github.getOctokit(token),
+	//octokit = github.getOctokit(token),
 	repository = process.env.GITHUB_REPOSITORY,
 	repository_owner = repository.split('/')[0],
-	repository_name = repository.split('/')[1],
-	client = new github.GitHub(token)
+	repository_name = repository.split('/')[1]
 ;
 
 console.log(client);
