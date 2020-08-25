@@ -10,18 +10,15 @@ const core = require('@actions/core'),
 	repository_name = repository.split('/')[1]
 ;
 
-core.debug("context", context);
-core.debug("octokit", octokit);
 
 async function getCollaborators() {
 
-const { data: root } = await octokit.request("GET "+ payload.repository.collaborators_url);
-	// let { data: collaborators } = await octokit.repos.listCollaborators({
-	//   repository_owner,
-	//   repository_name
-	// });
+	let { data: collaborators } = await octokit.repos.listCollaborators({
+	  owner: repository_owner,
+	  repo: repository_name
+	});
 
-   	console.log(root);
+   	console.log(collaborators);
 }
 getCollaborators();
 
