@@ -1,24 +1,48 @@
 const core = require('@actions/core'),
 	github = require('@actions/github'),
-	payload = github.context.payload,
+	context = github.context,
+	payload = context.payload,
 	action=payload.action,
 	token=core.getInput('token'),
 	octokit = github.getOctokit(token),
 	repository = process.env.GITHUB_REPOSITORY,
 	repository_owner = repository.split('/')[0],
-	repository_name = repository.split('/')[1]
+	repository_name = repository.split('/')[1],
+	client = new github.GitHub(token)
 ;
 
-async function getCollaborators() {
-	let { data: collaborators } = await octokit.repos.get({
-	  repository_owner,
-	  repository_name
-	});
+console.log(client);
 
-   	console.log(collaborators);
-}
+// async function getCollaborators() {
+// 	let { data: collaborators } = await octokit.repos.get({
+// 	  repository_owner,
+// 	  repository_name
+// 	});
 
-getCollaborators();
+//    	console.log(collaborators);
+// }
+//getCollaborators();
+
+// function editLabel() {
+//     var context = github.context;
+//     var pr = context.payload.pull_request;
+//     if (!pr) {
+//         return;
+//     }
+//     if (type == "add") {
+//         client.issues.addLabels(__assign(__assign({}, context.repo), { issue_number: pr.number, labels: [label] }))["catch"](function (e) {
+//             console.log(e.message);
+//         });
+//     }
+//     if (type == "remove") {
+//         client.issues.removeLabel(__assign(__assign({}, context.repo), { issue_number: pr.number, name: label }))["catch"](function (e) {
+//             console.log(e.message);
+//         });
+//     }
+
+
+
+
 
 
 
