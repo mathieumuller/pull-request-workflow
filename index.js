@@ -71,7 +71,7 @@ async function requestReviews() {
 	octokit.pulls.requestReviewers({
 	  owner: repository_owner,
 	  repo: repository_name,
-	  pull_number: context.number,
+	  pull_number: payload.number,
 	  reviewers: requestedReviewers
 	});
 }
