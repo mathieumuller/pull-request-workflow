@@ -9,6 +9,8 @@ const core = require('@actions/core'),
 ;
 
 async function getCollaborators() {
+	console.log(repository_owner);
+	console.log(repository_name);
 	let { data: collaborators } = await octokit.repos.listCollaborators({
 	  repository_owner,
 	  repository_name
