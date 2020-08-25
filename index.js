@@ -3,14 +3,15 @@ try {
 	const github = require('@actions/github'),
   		payload = JSON.stringify(github.context.payload, undefined, 2),
   		action=payload.action
+  		octokit = github.getOctokit(core.getInput('token'))
   	;
 
   	// listen to label addition
   	if ('labeled' === action) {
   		// case RFR label added
   		if (core.getInput('label_review') === payload.label.name) {
-  			assignReviewers();
   		}
+  			assignReviewers();
   	}
 
   	// listen to submitted review
@@ -18,8 +19,6 @@ try {
 
   	}
 
-
-	console.log(core.getInput('token'));
   // // `who-to-greet` input defined in action metadata file
   // const nameToGreet = core.getInput('who-to-greet');
   // console.log(`Hello ${nameToGreet}!`);
@@ -32,6 +31,26 @@ try {
 }
 
 function assignRevewers() {
+    let collaborators = octokit.request(payload.repository.collaborators_url);
 
+    console.log(collaborators);
 
 }
+
+// function editLabel() {
+//     var context = github.context;
+//     var pr = context.payload.pull_request;
+//     if (!pr) {
+//         return;
+//     }
+//     if (type == "add") {
+//         client.issues.addLabels(__assign(__assign({}, context.repo), { issue_number: pr.number, labels: [label] }))["catch"](function (e) {
+//             console.log(e.message);
+//         });
+//     }
+//     if (type == "remove") {
+//         client.issues.removeLabel(__assign(__assign({}, context.repo), { issue_number: pr.number, name: label }))["catch"](function (e) {
+//             console.log(e.message);
+//         });
+//     }
+// }
