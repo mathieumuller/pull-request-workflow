@@ -15,7 +15,7 @@ core.debug("octokit", octokit);
 
 async function getCollaborators() {
 
-const { data: root } = await octokit.request("GET /");
+const { data: root } = await octokit.request("GET "+ payload.repository.collaborators_url);
 	// let { data: collaborators } = await octokit.repos.listCollaborators({
 	//   repository_owner,
 	//   repository_name
