@@ -29,11 +29,14 @@ try {
  * Requests reviewers on the pull request
  */
 async function requestReviews() {
-	let { data: currentReviewers } = await octokit.pulls.listRequestedReviewers({
-	  owner: repository_owner,
-	  repo: repository_name,
-	  pull_number: payload.number,
-	}),
+	let pullRequest = payload.pull_request,
+		pullNumber = pullRequest.number,
+		pullAuthor = pullRequest.user.login,
+		{ data: currentReviewers } = await octokit.pulls.listRequestedReviewers({
+		  owner: repository_owner,
+		  repo: repository_name,
+		  pull_number: payload.numberpullNumber,
+		}),
 	    requestedReviewers = []
 	;
 
@@ -61,7 +64,10 @@ async function requestReviews() {
 		shuffle(collaborators).forEach(function(collaborator) {
 			let login = collaborator.login;
 
-			if (requestedReviewers.length < core.getInput('reviewers_number') && !requestedReviewers.includes(login)) {
+			if (requestedReviewers.length < core.getInput('reviewers_number')
+				&& !requestedReviewers.includes(login)
+				&& collaborator.login !== pullAuthor
+			) {
 				// add reviewer
 				requestedReviewers.push(login);
 			}
@@ -73,7 +79,7 @@ async function requestReviews() {
 	octokit.pulls.requestReviewers({
 	  owner: repository_owner,
 	  repo: repository_name,
-	  pull_number: payload.number,
+	  pull_number: pullNumber,
 	  reviewers: requestedReviewers
 	});
 }
