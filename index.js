@@ -8,7 +8,7 @@ const core = require('@actions/core'),
 async function getCollaborators() {
 	let { data: collaborators } = await octokit.repos.listCollaborators({
 	  'uppler',
-	  'uppler',
+	  'uppler'
 	});
 
    	console.log(collaborators);
