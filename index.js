@@ -38,9 +38,11 @@ async function requestReviews() {
 	;
 
 	// keep reviewers if they were already assigned
-	currentReviewers.forEach(function(reviewer) {
-		requestReviewers.push(reviewer.login);
-	});
+	if (currentReviewers.length > 0) {
+		currentReviewers.forEach(function(reviewer) {
+			requestReviewers.push(reviewer.login);
+		});
+	}
 
 	// always add the permanent reviewer
 	if (!requestedReviewers.includes(core.getInput('permanent_reviewer'))) {
