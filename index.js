@@ -2,6 +2,7 @@ const core = require('@actions/core'),
 	token=core.getInput('token'),
 	github = require('@actions/github'),
 	context = github.context,
+	eventName = context.eventName,
 	payload = context.payload,
 	action=payload.action,
 	octokit = github.getOctokit(token),
@@ -10,17 +11,64 @@ const core = require('@actions/core'),
 	repository_name = repository.split('/')[1]
 ;
 
+try {
+	if ('pull_request' === eventName) {
+		if ('labeled' === action) {
+			requestReviews();
+		}
+	}
 
+	if ('pull_request_review' === eventName) {
+
+	}
+} catch (error) {
+  core.setFailed(error.message);
+}
+
+
+/**
+ * Returns the list of repository collaborators
+ */
 async function getCollaborators() {
-
 	let { data: collaborators } = await octokit.repos.listCollaborators({
 	  owner: repository_owner,
 	  repo: repository_name
 	});
 
-   	console.log(collaborators);
+   	return collaborators;
 }
-getCollaborators();
+
+/**
+ * Requests reviewers on the pull request
+ */
+function requestReviews() {
+	let collaborators = shuffle(getCollaborators()),
+		requestedReviewers = [core.getInput('permanent_reviewer')],
+		countReviewers = 1;
+
+	collaborators.forEach(function(i, collaborator) {
+		let login = collaborator.login;
+		if (!requestedReviewers.include(login)) {
+			// add reviewer
+			requestedReviewers.push(login);
+		}
+	});
+
+	console.log(requestedReviewers);
+}
+
+/**
+ * Shuffles array in place.
+ */
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+
+    return array;
+}
+
 
 // function editLabel() {
 //     var context = github.context;

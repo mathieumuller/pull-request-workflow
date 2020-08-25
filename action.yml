@@ -8,6 +8,17 @@ inputs:
     description: 'The label that triggers review requests'
     required: true
     default: 'RFR'
+  reviewer_number:
+  	description: 'The number of reviewers assigned to a pull request'
+  	required: true
+  	default: 3
+  approval_number:
+  	description: 'The number of approvals required to be accepted'
+  	required: true
+  	default: 2
+  permanent_reviewer:
+    description: 'The collaborator assigned by default on pull requests'
+    required: true
 outputs:
   time: # id of output
     description: 'The time we greeted you'
