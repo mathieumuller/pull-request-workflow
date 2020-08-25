@@ -14,12 +14,14 @@ core.debug("context", context);
 core.debug("octokit", octokit);
 
 async function getCollaborators() {
-	let { data: collaborators } = await octokit.repos.listCollaborators({
-	  repository_owner,
-	  repository_name
-	});
 
-   	console.log(collaborators);
+const { data: root } = await octokit.request("GET /");
+	// let { data: collaborators } = await octokit.repos.listCollaborators({
+	//   repository_owner,
+	//   repository_name
+	// });
+
+   	console.log(root);
 }
 getCollaborators();
 
