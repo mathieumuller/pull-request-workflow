@@ -38,7 +38,7 @@ async function requestReviews() {
 
 	collaborators.forEach(function(i, collaborator) {
 		let login = collaborator.login;
-		if (!requestedReviewers.include(login)) {
+		if (!requestedReviewers.includes(login)) {
 			// add reviewer
 			requestedReviewers.push(login);
 		}
