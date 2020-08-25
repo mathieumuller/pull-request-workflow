@@ -5,7 +5,7 @@ const core = require('@actions/core'),
 	octokit = github.getOctokit(core.getInput('token')),
 	repository = process.env('GITHUB_REPOSITORY'),
 	repository_owner = repository.split('/')[0],
-	repository_name = repository.split('/')[1],
+	repository_name = repository.split('/')[1]
 ;
 
 async function getCollaborators() {
