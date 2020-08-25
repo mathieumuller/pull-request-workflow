@@ -18,3 +18,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           label_review: 'RFR'
           permanent_reviewer: mathieumuller
+          reviewers_number: 3
+          approval_number: 2
