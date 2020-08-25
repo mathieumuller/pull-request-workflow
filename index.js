@@ -8,13 +8,7 @@ try {
 
   	// listen to label addition
   	if ('labeled' === action) {
-  		let collaborators = await octokit.request(payload.repository.collaborators_url)
-  		    collaborators2 = await octokit.repos.listCollaborators({
-			  uppler,
-			  uppler,
-			});
-
-    	console.log(collaborators, collaborators2);
+  		getCollaborators();
   		// case RFR label added
   		if (core.getInput('label_review') === payload.label.name) {
   		}
@@ -37,8 +31,14 @@ try {
   core.setFailed(error.message);
 }
 
-function assignRevewers() {
+async function getCollaborators() {
+	let collaborators = await octokit.request(payload.repository.collaborators_url)
+  		    collaborators2 = await octokit.repos.listCollaborators({
+			  uppler,
+			  uppler,
+			});
 
+    	console.log(collaborators, collaborators2);
 
 }
 
