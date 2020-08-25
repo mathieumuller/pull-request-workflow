@@ -66,6 +66,8 @@ async function requestReviews() {
 		});
 	}
 
+	console.log(requestedReviewers);
+
 	octokit.pulls.requestReviewers({
 	  owner: repository_owner,
 	  repo: repository_name,
