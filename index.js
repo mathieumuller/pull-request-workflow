@@ -35,7 +35,7 @@ async function requestReviews() {
 		{ data: currentReviewers } = await octokit.pulls.listRequestedReviewers({
 		  owner: repository_owner,
 		  repo: repository_name,
-		  pull_number: payload.numberpullNumber,
+		  pull_number: pullNumber,
 		}),
 	    requestedReviewers = []
 	;
