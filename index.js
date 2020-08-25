@@ -32,7 +32,7 @@ async function requestReviews() {
 	let { data: currentReviewers } = await octokit.pulls.listRequestedReviewers({
 	  owner: repository_owner,
 	  repo: repository_name,
-	  pull_number: context.number,
+	  pull_number: payload.number,
 	}),
 	    requestedReviewers = []
 	;
@@ -68,12 +68,12 @@ async function requestReviews() {
 
 	console.log(requestedReviewers);
 
-	// octokit.pulls.requestReviewers({
-	//   owner: repository_owner,
-	//   repo: repository_name,
-	//   pull_number: context.number,
-	//   reviewers: requestedReviewers
-	// });
+	octokit.pulls.requestReviewers({
+	  owner: repository_owner,
+	  repo: repository_name,
+	  pull_number: context.number,
+	  reviewers: requestedReviewers
+	});
 }
 
 /**
