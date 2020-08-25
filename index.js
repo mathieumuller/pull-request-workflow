@@ -32,13 +32,13 @@ try {
 }
 
 async function getCollaborators() {
-	let collaborators = await octokit.request(payload.repository.collaborators_url)
-  		    collaborators2 = await octokit.repos.listCollaborators({
-			  uppler,
-			  uppler,
-			});
+	let { data: collaborators } = await octokit.request(payload.repository.collaborators_url);
+  	// 	    { data: collaborators } = await octokit.repos.listCollaborators({
+			//   uppler,
+			//   uppler,
+			// });
 
-    	console.log(collaborators, collaborators2);
+    	console.log('toto', collaborators);
 
 }
 
