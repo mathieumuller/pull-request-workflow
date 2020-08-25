@@ -29,9 +29,10 @@ try {
  * Requests reviewers on the pull request
  */
 async function requestReviews() {
-	let { data: currentReviewers } = await octokit.repos.listRequestedReviewers({
+	let { data: currentReviewers } = await octokit.pulls.listRequestedReviewers({
 	  owner: repository_owner,
-	  repo: repository_name
+	  repo: repository_name,
+	  pull_number: context.number,
 	}),
 		requestedReviewers = []
 	;
