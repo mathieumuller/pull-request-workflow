@@ -19,7 +19,7 @@ try {
   	}
 
 
-	console.log(process.env.GITHUB_TOKEN);
+	console.log(core.getInput('token'));
   // // `who-to-greet` input defined in action metadata file
   // const nameToGreet = core.getInput('who-to-greet');
   // console.log(`Hello ${nameToGreet}!`);

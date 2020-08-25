@@ -1,6 +1,9 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
+  token:
+    description: 'The repository authentication token'
+    required: true
   label_review:
     description: 'The label that triggers review requests'
     required: true
