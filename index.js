@@ -156,6 +156,8 @@ async function getReviewersList()
 	    requestedReviewers = []
 	;
 
+	console.log(currentReviewers);
+
 	// keep reviewers if they were already assigned
 	if (currentReviewers.length > 0) {
 		currentReviewers.forEach(function(reviewer) {
