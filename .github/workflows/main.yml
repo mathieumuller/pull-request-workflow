@@ -16,9 +16,12 @@ jobs:
         uses: ./ # Uses an action in the root directory
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          label_review: 'RFR'
           label_test: 'RFT'
+          label_review: 'RFR'
+          label_changes_requested: 'FFF'
+          label_approved: 'RTM'
           label_emergency: 'MGY'
           permanent_reviewer: mathieumuller
+          mergeator: neime
           reviewers_number: 3
           approvals_number: 2

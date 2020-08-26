@@ -7,11 +7,17 @@ inputs:
   label_review:
     description: 'The label that triggers review requests'
     required: true
+  label_changes_requested:
+    description: 'The label to add when PR is refused'
+    required: true
   label_test:
     description: 'The label that triggers acceptance tests'
     required: true
   label_emergency:
     description: 'The label to unlock the workflow and be able to merge the pull request manually'
+    required: true
+  label_approved:
+    description: 'The label to add when PR is approved'
     required: true
   reviewers_number:
     description: 'The number of reviewers assigned to a pull request'
@@ -21,6 +27,9 @@ inputs:
     required: true
   permanent_reviewer:
     description: 'The collaborator assigned by default on pull requests'
+    required: true
+  mergeator:
+    description: 'The collaborator in charge to merge the PR'
     required: true
 runs:
   using: 'node12'
