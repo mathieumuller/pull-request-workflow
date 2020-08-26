@@ -260,7 +260,7 @@ async function listReviewers()
 	  pull_number: pullNumber,
 	});
 
-	return currentReviewers,
+	return currentReviewers;
 }
 
 /**
