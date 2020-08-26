@@ -124,7 +124,7 @@ async function requestReviews() {
  * Check that the pull request has at least 2 approvals and the permanent reviewer approval
  */
 async function isApproved() {
-	let countApprovals = 0,
+	let approvals = {},
 		hasPermanentReviewerApproval = false,
 		{ data: reviews } = await octokit.pulls.listReviews({
 		  owner: repository_owner,
@@ -135,14 +135,15 @@ async function isApproved() {
 
 	reviews.forEach(function(review) {
 		if ('approved' === review.state) {
-			if (review.user.login === permanentReviewer) {
+			let reviewAuthor = review.user.login;
+			if (reviewAuthor === permanentReviewer) {
 				hasPermanentReviewerApproval = true;
 			}
-			++countApprovals;
+			Object.assign(approvals, {reviewAuthor: 1});
 		}
 	});
 
-	return hasPermanentReviewerApproval && countApprovals >= approvalsNumber;
+	return hasPermanentReviewerApproval && Object.keys(approvals).length >= approvalsNumber;
 }
 
 /**
