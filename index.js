@@ -248,7 +248,7 @@ function addLabels(labels)
 	  owner: repository_owner,
 	  repo: repository_name,
 	  issue_number: pullNumber,
-	  name: labels
+	  labels: labels
 	});
 }
 
