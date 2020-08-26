@@ -188,7 +188,7 @@ async function getReviewersList()
 			}
 		});
 
-		console.log(requestReviewers);
+		console.log(requestedReviewers);
 
 		return requestedReviewers;
 	}
