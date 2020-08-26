@@ -89,7 +89,6 @@ try {
 					// remove RFR and FFF and add RTM labels
 					addLabels([labelApproved]);
 					removeLabel(labelReview);
-					removeLabel(labelChangesRequested);
 
 					// unassign reviewers + author and assign mergeator
 					unassignReviewers();
@@ -142,6 +141,8 @@ async function isApproved() {
 			Object.assign(approvals, {reviewAuthor: 1});
 		}
 	});
+
+	console.log(hasPermanentReviewerApproval, Object.keys(approvals).length,  approvalsNumber);
 
 	return hasPermanentReviewerApproval && Object.keys(approvals).length >= approvalsNumber;
 }
@@ -234,14 +235,29 @@ function requestReviewers(reviewers)
 	});
 }
 
-function removeLabel(label)
+async function removeLabel(label)
 {
-	octokit.issues.removeLabel({
-	  owner: repository_owner,
-	  repo: repository_name,
-	  issue_number: pullNumber,
-	  name: label
+	let { data: currentLabels } = await octokit.issues.listLabelsOnIssue({
+		owner: repository_owner,
+	    repo: repository_name,
+	    issue_number: pullNumber,
+	}),
+	hasLabel = false;
+
+	currentLabels.forEach(function(currentLabel) {
+		if (currentLabel.name === label) {
+			hasLabel = true;
+		}
 	});
+
+	if (hasLabel) {
+		octokit.issues.removeLabel({
+		  owner: repository_owner,
+		  repo: repository_name,
+		  issue_number: pullNumber,
+		  name: label
+		});
+	}
 }
 
 function addLabels(labels)
@@ -262,7 +278,7 @@ async function listReviewers()
 	  pull_number: pullNumber,
 	});
 
-	return currentReviewers;
+	return currentReviewers.users;
 }
 
 /**
@@ -273,9 +289,13 @@ async function unassignReviewers()
 	let currentReviewers = await listReviewers(),
 		reviewers = []
 	;
-	currentReviewers.forEach(function (reviewer) {
-		reviewers.push(reviewer.login);
-	});
 
-	removeAssignees(reviewers);
+	if (currentReviewers.length > 0) {
+		currentReviewers.forEach(function (reviewer) {
+			reviewers.push(reviewer.login);
+		});
+
+		removeAssignees(reviewers);
+	}
+
 }
