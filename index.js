@@ -142,6 +142,7 @@ async function isApproved() {
 		}
 	});
 
+	console.log(hasPermanentReviewerApproval, Object.keys(approvals).length, approvalsNumber, approvals);
 	return hasPermanentReviewerApproval && Object.keys(approvals).length >= approvalsNumber;
 }
 
