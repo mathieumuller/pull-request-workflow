@@ -19,7 +19,7 @@ try {
 	}
 
 	if ('pull_request_review' === eventName) {
-
+		console.log(context);
 	}
 } catch (error) {
   core.setFailed(error.message);
