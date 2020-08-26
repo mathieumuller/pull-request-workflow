@@ -71,7 +71,7 @@ try {
 			// on changes requested -> remove RFR -> add FFF -> unassign reviewer
 			if ('changes_requested' === review.state) {
 				removeLabel(labelReview);
-				addLabel(labelChangesRequested);
+				addLabels([labelChangesRequested]);
 				removeAssignees([reviewer]);
 			}
 
@@ -86,7 +86,7 @@ try {
 				// check number of approvals
 				if (isApproved()) {
 					// remove RFR and FFF and add RTM labels
-					addLabel(labelApproved);
+					addLabels([labelApproved]);
 					removeLabel(labelReview);
 					removeLabel(labelChangesRequested);
 
@@ -242,13 +242,13 @@ function removeLabel(label)
 	});
 }
 
-function addLabel(label)
+function addLabels(labels)
 {
-	octokit.issues.addLabel({
+	octokit.issues.addLabels({
 	  owner: repository_owner,
 	  repo: repository_name,
 	  issue_number: pullNumber,
-	  name: label
+	  name: labels
 	});
 }
 
