@@ -73,6 +73,7 @@ try {
 				removeLabel(labelReview);
 				addLabels([labelChangesRequested]);
 				removeAssignees([reviewer]);
+				addAssignees([author]);
 			}
 
 			// on comment -> assign author
