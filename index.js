@@ -107,7 +107,7 @@ try {
  * Requests reviewers on the pull request
  */
 async function requestReviews() {
-	let reviewers = await getReviewersList(pullNumber, pullAuthor);
+	let reviewers = await getReviewersList();
 
 	// add the reviewers
 	requestReviewers(reviewers);
@@ -147,7 +147,7 @@ async function isApproved() {
 /**
  * Build the reviewers list of a pull request
  */
-async function getReviewersList(pullNumber, pullAuthor)
+async function getReviewersList()
 {
 	let currentReviewers = await listReviewers(),
 	    requestedReviewers = []
@@ -179,7 +179,7 @@ async function getReviewersList(pullNumber, pullAuthor)
 
 			if (requestedReviewers.length < core.getInput('reviewers_number')
 				&& !requestedReviewers.includes(login)
-				&& collaborator.login !== pullAuthor
+				&& collaborator.login !== author
 			) {
 				// add reviewer
 				requestedReviewers.push(login);
