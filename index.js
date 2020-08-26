@@ -108,7 +108,6 @@ try {
  */
 async function requestReviews() {
 	let reviewers = await getReviewersList();
-	console.log(reviewers);
 
 	// add the reviewers
 	requestReviewers(reviewers);
@@ -187,11 +186,9 @@ async function getReviewersList()
 				requestedReviewers.push(login);
 			}
 		});
-
-		console.log(requestedReviewers);
-
-		return requestedReviewers;
 	}
+
+	return requestedReviewers;
 }
 
 /**
