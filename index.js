@@ -138,11 +138,11 @@ async function isApproved() {
 			if (reviewAuthor === permanentReviewer) {
 				hasPermanentReviewerApproval = true;
 			}
-			Object.assign(approvals, {reviewAuthor: 1});
+			approvals = Object.assign(approvals, {reviewAuthor: 1});
 		}
 	});
 
-	console.log(hasPermanentReviewerApproval, Object.keys(approvals).length, approvalsNumber, approvals);
+	console.log(hasPermanentReviewerApproval, Object.keys(approvals).length, approvalsNumber, hasPermanentReviewerApproval && Object.keys(approvals).length >= approvalsNumber,  approvals);
 	return hasPermanentReviewerApproval && Object.keys(approvals).length >= approvalsNumber;
 }
 
