@@ -108,12 +108,13 @@ try {
  */
 async function requestReviews() {
 	let reviewers = await getReviewersList();
+	console.log(reviewers);
 
 	// add the reviewers
 	requestReviewers(reviewers);
 
 	// unassign the author
-	removeAssignees([payload.pull_request.user.login]);
+	removeAssignees([author]);
 
 	// assign the reviewers
 	addAssignees(reviewers);
@@ -142,8 +143,6 @@ async function isApproved() {
 		}
 	});
 
-	console.log(hasPermanentReviewerApproval, Object.keys(approvals).length,  approvalsNumber);
-
 	return hasPermanentReviewerApproval && Object.keys(approvals).length >= approvalsNumber;
 }
 
@@ -155,8 +154,6 @@ async function getReviewersList()
 	let currentReviewers = await listReviewers(),
 	    requestedReviewers = []
 	;
-
-	console.log(currentReviewers);
 
 	// keep reviewers if they were already assigned
 	if (currentReviewers.length > 0) {
