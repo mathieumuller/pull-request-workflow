@@ -32,7 +32,40 @@ async function requestReviews() {
 	let pullRequest = payload.pull_request,
 		pullNumber = pullRequest.number,
 		pullAuthor = pullRequest.user.login,
-		{ data: currentReviewers } = await octokit.pulls.listRequestedReviewers({
+	    reviewers = await getReviewersList(pullNumber, pullAuthor)
+	;
+
+	// add the reviewers
+	octokit.pulls.requestReviewers({
+	  owner: repository_owner,
+	  repo: repository_name,
+	  pull_number: pullNumber,
+	  reviewers: reviewers
+	});
+
+	// unassign the author
+	octokit.issues.removeAssignees({
+	  owner: repository_owner,
+	  repo: repository_name,
+	  issue_number: pullNumber,
+	  assignees: [pullAuthor]
+	});
+
+	// assign the reviewers
+	octokit.issues.addAssignees({
+	  owner: repository_owner,
+	  repo: repository_name,
+	  issue_number: pullNumber,
+	  assignees: reviewers
+	});
+}
+
+/**
+ * Build the reviewers list of a pull request
+ */
+async function getReviewersList(pullNumber, pullAuthor)
+{
+	let { data: currentReviewers } = await octokit.pulls.listRequestedReviewers({
 		  owner: repository_owner,
 		  repo: repository_name,
 		  pull_number: pullNumber,
@@ -43,7 +76,7 @@ async function requestReviews() {
 	// keep reviewers if they were already assigned
 	if (currentReviewers.length > 0) {
 		currentReviewers.forEach(function(reviewer) {
-			requestReviewers.push(reviewer.login);
+			requestedReviewers.push(reviewer.login);
 		});
 	}
 
@@ -72,16 +105,9 @@ async function requestReviews() {
 				requestedReviewers.push(login);
 			}
 		});
+
+		return requestedReviewers;
 	}
-
-	console.log(requestedReviewers);
-
-	octokit.pulls.requestReviewers({
-	  owner: repository_owner,
-	  repo: repository_name,
-	  pull_number: pullNumber,
-	  reviewers: requestedReviewers
-	});
 }
 
 /**
@@ -95,74 +121,3 @@ function shuffle(array) {
 
     return array;
 }
-
-
-// function editLabel() {
-//     var context = github.context;
-//     var pr = context.payload.pull_request;
-//     if (!pr) {
-//         return;
-//     }
-//     if (type == "add") {
-//         client.issues.addLabels(__assign(__assign({}, context.repo), { issue_number: pr.number, labels: [label] }))["catch"](function (e) {
-//             console.log(e.message);
-//         });
-//     }
-//     if (type == "remove") {
-//         client.issues.removeLabel(__assign(__assign({}, context.repo), { issue_number: pr.number, name: label }))["catch"](function (e) {
-//             console.log(e.message);
-//         });
-//     }
-
-
-
-
-
-
-
-// try {
-
-//   	// listen to label addition
-//   	if ('labeled' === action) {
-//   		getCollaborators();
-//   		// case RFR label added
-//   		if (core.getInput('label_review') === payload.label.name) {
-//   		}
-//   			assignReviewers();
-//   	}
-
-//   	// listen to submitted review
-//   	if ('submitted' === action) {
-
-//   	}
-
-//   // // `who-to-greet` input defined in action metadata file
-//   // const nameToGreet = core.getInput('who-to-greet');
-//   // console.log(`Hello ${nameToGreet}!`);
-//   // const time = (new Date()).toTimeString();
-//   // core.setOutput("time", time);
-//   // // Get the JSON webhook payload for the event that triggered the workflow
-//   // console.log(`The event payload: ${payload}`);
-// } catch (error) {
-//   core.setFailed(error.message);
-// }
-
-
-
-// // function editLabel() {
-// //     var context = github.context;
-// //     var pr = context.payload.pull_request;
-// //     if (!pr) {
-// //         return;
-// //     }
-// //     if (type == "add") {
-// //         client.issues.addLabels(__assign(__assign({}, context.repo), { issue_number: pr.number, labels: [label] }))["catch"](function (e) {
-// //             console.log(e.message);
-// //         });
-// //     }
-// //     if (type == "remove") {
-// //         client.issues.removeLabel(__assign(__assign({}, context.repo), { issue_number: pr.number, name: label }))["catch"](function (e) {
-// //             console.log(e.message);
-// //         });
-// //     }
-// // }
